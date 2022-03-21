@@ -1,0 +1,79 @@
+html, body {
+    margin: 0;
+    height: 100%;
+    width: 100%;
+}
+
+a {
+    color: #000000;
+    text-decoration: none;
+}
+
+h2 {
+    margin: 0;
+}
+
+div.modal {
+    position: absolute;
+    z-index: 2;
+    width: 90%;
+    background-color: #ffffff;
+    height: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 8px;
+}
+
+div.modal div.modal-header {
+    border-bottom: 1px solid #ccc;
+}
+
+div.modal div.modal-content {
+    height: 100%;
+}
+
+div.modal div.modal-content h3 {
+    font-size: 15px;
+}
+
+div.container {
+    width: 100%;
+    height: 100%;
+    background-color: #8BC6EC;
+    background-image: linear-gradient(135deg, #8BC6EC 0%, #9599E2 100%);
+    text-align: center;
+    align-items: center;
+    display: flex;
+}
+
+div.main {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+div.main h2 {
+    color: #ffffff;
+    margin-bottom: 10px;
+}
+
+div.main div.profile img {
+    border-radius: 50%;
+}
+
+a#login {
+    /* border: 3px solid #ffffff; */
+    background: rgba(219,219,220,.5);
+    padding: 10px 30px;
+    color: #ffffff;
+    border-radius: 10px;
+    font-size: 20px;
+    font-weight: bold;
+    margin: auto;
+    transition: all 200ms ease-in;
+}
+
+a#login:hover {
+    opacity: 0.5;
+}

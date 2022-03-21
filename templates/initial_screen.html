@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <script src="../static/js/ShowLoader.js?af"></script>
+    <script>
+        $(document).ready(function() {
+            var css = '<link rel="stylesheet" href="../static/css/initial_screen.css?' + Math.random() + '">';
+            $('head').append(css);
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#modal').hide();
+            var filter = "win16|win32|win64|mac|macintel";
+            // 모바일로 접속했을 때
+            if (0 > filter.indexOf(navigator.platform.toLocaleLowerCase())) {
+                // document.getElementById('modal').style.display = "inline-block";
+                $('#modal').show();
+            }
+        })
+    </script>
+    <title>Seokmin's API</title>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <div class="modal" id="modal">
+                <div class="modal-header">
+                    <h3>
+                        PC에서 접속해 주세요.
+                    </h3>
+                </div>
+                <div class="modal-content">
+                    <h3>
+                        이 사이트는 모바일 환경에 최적화 되어있지 않습니다.
+                    </h3>
+                </div>
+            </div>
+            <div class="profile">
+                <img src="../static/image/memoji.jpg" alt="profile" width="150" height="150">
+            </div>
+            <h2>SeokMin LEE</h2>
+            <a href="main" id="login" onclick="InitialShowLoader()">Login</a>
+            <i class="fa-solid fa-spinner fa-2xl fa-spin" style="z-index: 3; display: none; margin-top: 10px;" id="initial_loader"></i>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT"> 
+    <meta http-equiv="Expires" content="-1"> 
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.min.js'></script>
+
+    <script src="../static/js/getFileName.js"></script>
+    <script src="../static/js/ShowLoader.js?ssadg"></script>
+    <script src="../static/js/calendar.js"></script>
+    <script src="../static/js/sidebar.js?aa"></script>
+
+    <script>
+        $(document).ready(function() {
+            var css = '<link rel="stylesheet" href="../static/css/index.css?' + Math.random() + '">';
+            $('head').append(css);
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            // 감정분석 결과 출력
+            var sentiment_result_div = document.getElementById('sentiment_result');
+            var sentiment_predict = new URLSearchParams(location.search).get('sentiment_predict');
+            sentiment_result_div.innerText = sentiment_predict;
+
+            var news_title = new URLSearchParams(location.search).get('news_title');
+            $('#news_input').attr('value', news_title);
+
+            // 주식 예측 결과 출력
+            var stock_result_div = document.getElementById('stock_predict_result');
+            var stock_predict = new URLSearchParams(location.search).get('stock_predict');
+            stock_result_div.innerText = stock_predict;
+
+            var symbol = new URLSearchParams(location.search).get('symbol');
+            $('#stock_symbol').attr('value', symbol);
+
+            // 얼굴 인식 결과 출력
+            var face_recognition_result_div = document.getElementById('face_result');
+            var face_recognition_result = new URLSearchParams(location.search).get('cropped');
+            if (face_recognition_result != null) {
+                face_recognition_result_div.innerHTML = '<img src="{{ url_for("static", filename="uploadimage/face_crop.jpeg") }}?' + Math.random() + '" height="150" width="115">';
+            }
+
+            var samsung_color = '{{ samsung[3] }}';
+            var sk_color = '{{ sk[3] }}';
+            var naver_color = '{{ naver[3] }}';
+            var kakao_color = '{{ kakao[3] }}';
+            $('#stock_samsung_percent').css('color', samsung_color);
+            $('#stock_sk_percent').css('color', sk_color);
+            $('#stock_naver_percent').css('color', naver_color);
+            $('#stock_kakao_percent').css('color', kakao_color);
+
+            var samsung_icon = document.getElementById('samsung_icon');
+            var sk_icon = document.getElementById('sk_icon');
+            var naver_icon = document.getElementById('naver_icon');
+            var kakao_icon = document.getElementById('kakao_icon');
+
+            if (samsung_color == '#0059d1') {
+                samsung_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-down"></i>';
+            } else if (samsung_color == '#dc3545') {
+                samsung_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i>';
+            } else if (samsung_color == '#000000') {
+                samsung_icon.innerHTML = '<i class="fa-solid fa-minus"></i>';
+            }
+            if (sk_color == '#0059d1') {
+                sk_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-down"></i>';
+            } else if (sk_color == '#dc3545') {
+                sk_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i>';
+            } else if (sk_color == '#000000') {
+                sk_icon.innerHTML = '<i class="fa-solid fa-minus"></i>'
+            }
+            if (naver_color == '#0059d1') {
+                naver_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-down"></i>';
+            } else if (naver_color == '#dc3545') {
+                naver_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i>';
+            } else if (naver_color == '#000000') {
+                naver_icon.innerHTML = '<i class="fa-solid fa-minus"></i>'
+            }
+            if (kakao_color == '#0059d1') {
+                kakao_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-down"></i>';
+            } else if (kakao_color == '#dc3545') {
+                kakao_icon.innerHTML = '<i class="fa-solid fa-arrow-trend-up"></i>';
+            } else if (kakao_color == '#000000') {
+                kakao_icon.innerHTML = '<i class="fa-solid fa-minus"></i>'
+            }
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#dashboards-btn').addClass('active');
+            $('#dashboards-menu > li > #api').addClass('active');
+        })
+    </script>
+    <title>Seokmin's API</title>
+</head>
+<body>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/home">
+                <h3>Portfolio</h3>
+            </a>
+            <i class="fa-solid fa-x"  style="color: #ffffff; cursor: pointer;" id="sidebar_close_btn"></i>
+        </div>
+        <div class="sidebar-content">
+            <div class="profile">
+                <img src="{{ url_for('static', filename='image/memoji.jpg') }}" alt="profile" id="profile_img">
+                <h3>이석민 (Lee SeokMin)</h3>
+            </div>
+            <div class="sidebar-item-list">
+                <ul>
+                    <li class="sidebar-item-header">
+                        <p>Main</p>
+                    </li>
+                    <li class="sidebar-item dashboard">
+                        <a id="dashboards-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-house"></i>
+                                <span>Dashboards</span>
+                            </div>
+                            <div id="dashboard_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="dashboards-menu">
+                            <li class="slidemenu">
+                                <a href="/profile" id="profile">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="slidemenu">
+                                <a href="/main" id="api">
+                                    <span>APIs</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item document">
+                        <a id="document-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-file"></i>
+                                <span>Document</span>
+                            </div>
+                            <div id="document_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="document-menu">
+                            <li class="slidemenu">
+                                <a href="/api/document?query=nature_language">
+                                    <span>자연어 처리 (Nature Language)</span>
+                                </a>
+                                <a href="/api/document?query=stock_predict">
+                                    <span>주식 예측 (Stock Predict)</span>
+                                </a>
+                                <a href="/api/document?query=face_recognition">
+                                    <span>얼굴 인식 (Face Recognition)</span>
+                                </a>
+                                <a href="/api/document?query=ocr">
+                                    <span>이미지 텍스트 추출 (OCR)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <nav class="main_nav">
+            <div id="front">
+                <span id="icon">
+                    <i class="fa-solid fa-bars fa-lg" style="color: #ffffff; cursor: pointer;" id="sidebar_open_btn"></i>
+                </span>
+                <input type="text" name="search" id="search" placeholder="Search projects.." autocomplete="off">
+            </div>
+            <div id="rear">
+                <span id="icon">
+                    <i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i>
+                </span>
+            </div>
+        </nav>
+        <main class="container">
+            <div class="container-fluid">
+                <div class="header">
+                    <a href="main">
+                        <h1 class="header-title">Seokmin's APIs</h1>
+                    </a>
+                    <p class="header-subtitle">These APIs created with Python, Node Js</p>
+                </div>
+                <div class="service">
+                    <div class="row">
+                        <div class="card nature-language" style="width: 50%;">
+                            <div class="card-header">
+                                <h4 class="card-title">자연어 처리 감성분석 인공지능 (Nature Language Sentiment Predict)</h4>
+                                <div class="etc">
+                                    <span class="python"></span>
+                                    <p>Python</p>
+                                    <a href="https://github.com/seokmin12/nature_language" target="_blank">
+                                        <i class="fa-brands fa-github-square fa-xl"></i>
+                                    </a>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <center>
+                                    <form action="/api/machine_learning/nature_language" method="post">
+                                        <input type="text" name="news" id="news_input" placeholder="뉴스 기사 제목을 입력해 주세요." autocomplete="off">
+                                        <i class="fa-solid fa-spinner fa-lg fa-spin" style="z-index: 3; display: none; margin-left: -50px;" id="NL_loader"></i>
+                                        <input type="submit" value="SEND" id="NL_btn">
+                                    </form>
+                                    <div class="result">
+                                        <h2 class="result-title" id="sentiment_result"></h2>
+                                    </div>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="minicard" style="display: flex; flex-direction: column; width: 45%;">
+                            <div class="row">
+                                <div class="card stock">
+                                    <div class="card-header">
+                                        <h5 class="card-title">삼성전자 (005930)</h5>
+                                        <div class="etc">
+                                            <a href="main">
+                                                <i class="fa-solid fa-arrow-rotate-right"></i>
+                                            </a>
+                                            <a href="https://finance.naver.com/item/main.naver?code=005930" target="_blank">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="now-price">
+                                            <h2>{{ samsung[0] }}</h2>
+                                            <div class="stock_icon" id="samsung_icon">
+                                                
+                                            </div>
+                                        </div>
+                                        <div class="price_change">
+                                            <h4 id="stock_samsung_percent" class="stock_percent">{{ samsung[1] }}</h4>
+                                            <h4>{{ samsung[2] }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card stock">
+                                    <div class="card-header">
+                                        <h5 class="card-title">SK하이닉스 (000660)</h5>
+                                        <div class="etc">
+                                            <a href="main">
+                                                <i class="fa-solid fa-arrow-rotate-right"></i>
+                                            </a>
+                                            <a href="https://finance.naver.com/item/main.naver?code=000660" target="_blank">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="now-price">
+                                            <h2>{{ sk[0] }}</h2>
+                                            <div class="stock_icon" id="sk_icon">
+
+                                            </div>
+                                        </div>
+                                        <div class="price_change">
+                                            <h4 id="stock_sk_percent" class="stock_percent">{{ sk[1] }}</h4>
+                                            <h4>{{ sk[2] }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="card stock">
+                                    <div class="card-header">
+                                        <h5 class="card-title">네이버 (035420)</h5>
+                                        <div class="etc">
+                                            <a href="main">
+                                                <i class="fa-solid fa-arrow-rotate-right"></i>
+                                            </a>
+                                            <a href="https://finance.naver.com/item/main.naver?code=035420" target="_blank">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="now-price">
+                                            <h2>{{ naver[0] }}</h2>
+                                            <div class="stock_icon" id="naver_icon">
+
+                                            </div>
+                                        </div>
+                                        <div class="price_change">
+                                            <h4 id="stock_naver_percent" class="stock_percent">{{ naver[1] }}</h4>
+                                            <h4>{{ naver[2] }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card stock">
+                                    <div class="card-header">
+                                        <h5 class="card-title">카카오 (035720)</h5>
+                                        <div class="etc">
+                                            <a href="main">
+                                                <i class="fa-solid fa-arrow-rotate-right"></i>
+                                            </a>
+                                            <a href="https://finance.naver.com/item/main.naver?code=035720" target="_black">
+                                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                            </a>
+                                            <i class="fa-solid fa-ellipsis-vertical"></i>
+                                        </div>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="now-price">
+                                            <h2>{{ kakao[0] }}</h2>
+                                            <div class="stock_icon" id="kakao_icon">
+
+                                            </div>
+                                        </div>
+                                        <div class="price_change">
+                                            <h4 id="stock_kakao_percent" class="stock_percent">{{ kakao[1] }}</h4>
+                                            <h4>{{ kakao[2] }}</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card calendar" style="width: 20%;">
+                            <div class="card-header">
+                                <h4 class="card-title">달력 (Calendar)</h4>
+                                <div class="etc">
+                                    <span class="js"></span>
+                                    <p>JavaScript</p>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div id="calendar">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card stock-predict" style="width: 30%;">
+                            <div class="card-header">
+                                <h4 class="card-title">주식 예측 (Stock Predict)</h4>
+                                <div class="etc">
+                                    <span class="python"></span>
+                                    <p>Python</p>
+                                    <a href="https://github.com/seokmin12/stock-predict" target="_blank">
+                                        <i class="fa-brands fa-github-square fa-xl"></i>
+                                    </a>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <center>
+                                    <form action="/api/machine_learning/stock_predict" method="post">
+                                        <input type="text" name="stock_symbol" id="stock_symbol" placeholder="종목 코드를 입력해 주세요." autocomplete="off">
+                                        <i class="fa-solid fa-spinner fa-lg fa-spin" style="z-index: 3; display: none; margin-top: 25px;" id="stock_loader"></i>
+                                        <input type="submit" value="SEND" id="stock_predict_btn">
+                                    </form>
+                                    <h2 id="stock_predict_result">
+
+                                    </h2>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="card face-recognition" style="width: 40%;">
+                            <div class="card-header">
+                                <h4 class="card-title">얼굴 인식 (face recognition)</h4>
+                                <div class="etc">
+                                    <span class="python"></span>
+                                    <p>Python</p>
+                                    <a href="https://github.com/seokmin12/face-recognition" target="_blank">
+                                        <i class="fa-brands fa-github-square fa-xl"></i>
+                                    </a>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <center>
+                                    <form action="/api/machine_learning/face_recognition" method="post" enctype="multipart/form-data">
+                                        <div class="input">
+                                            <label for="face_uploadfile" id="face_file_btn">Upload a file</label>
+                                            <input type="file" name="face_uploadfile" id="face_uploadfile" onchange="getFileName()" style="display: none;">
+                                            <span id="face_fileName"></span>
+                                        </div>
+                                        <i class="fa-solid fa-spinner fa-lg fa-spin" style="z-index: 3; display: none; margin-top: 35px;" id="face_loader"></i>
+                                        <input type="submit" value="SEND" id="face_btn">
+                                    </form>
+                                    <div id="face_result"></div>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card ocr" style="width: 30%;">
+                            <div class="card-header">
+                                <h4 class="card-title">이미지 텍스트 추출 (OCR)</h4>
+                                <div class="etc">
+                                    <span class="nodejs"></span>
+                                    <p>Node Js</p>
+                                    <a href="https://github.com/seokmin12/OCR" target="_blank">
+                                        <i class="fa-brands fa-github-square fa-xl"></i>
+                                    </a>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <center>
+                                    <form action="http://18.222.134.236:4000/api/ocr" method="post" enctype="multipart/form-data">
+                                        <label for="uploadfile" id="file_btn">Upload a file</label>
+                                        <input type="file" name="uploadfile" id="uploadfile" onchange="getFileName()" style="display: none;">
+                                        <span id="fileName"></span>
+                                        <input list="lang-list" id="lang" name="lang" placeholder="언어를 선택해 주세요.">
+                                        <datalist id="lang_list">
+                                            <option value="kor">
+                                            <option value="eng">
+                                        </datalist>
+                                        <br><br>
+                                        <input type="submit" value="SEND">
+                                    </form>
+                                </center>
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <li>
+                            <a href="#">Home</a>
+                            <a href="#">Services</a>
+                            <a href="#">About</a>
+                            <a href="#">Terms</a>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <p class="copyright">© 2022 - 이석민</p>
+                    </footer>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

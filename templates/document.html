@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+
+    <script src="../static/js/sidebar.js"></script>
+    <script>
+        $(document).ready(function() {
+            var css = '<link rel="stylesheet" href="../static/css/index.css?' + Math.random() + '">';
+            $('head').append(css);
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#document-btn').addClass('active');
+
+            var lang = '{{ lang }}';
+            var color = '{{ color }}';
+            var github = '{{ github }}';
+            var name = '{{ name }}';
+
+            $('.etc > span').addClass(color);
+            $('.etc > a').attr('href', github);
+
+            if (name == 'nature_language') {
+                $('.card-title').text('자연어 처리 감성분석 인공지능 (Nature Language Sentiment Predict)');
+                $('#NL').addClass('active');
+                $('.header > a').attr('href', '/api/document?query=nature_language');
+            }
+            if (name == 'stock_predict') {
+                $('.card-title').text('주식 예측 (Stock Predict)');
+                $('#stock').addClass('active');
+                $('.header > a').attr('href', '/api/document?query=stock_predict');
+            }
+            if (name == 'face_recognition') {
+                $('.card-title').text('얼굴 인식 (face recognition)');
+                $('#face').addClass('active');
+                $('.header > a').attr('href', '/api/document?query=face_recognition');
+            }
+            if (name == 'ocr') {
+                $('.card-title').text('이미지 텍스트 추출 (OCR)');
+                $('#ocr').addClass('active');
+                $('.header > a').attr('href', '/api/document?query=ocr');
+
+                $('#parameter').append('<tr><td>{{ doc["parameter"][1] }}</td><td>{{ doc["type"][1] }}</td><td>{{ doc["method"][1] }}</td><td>{{ doc["Required"][1] }}</td><td>{{ doc["description"][1] }}</td></tr>');
+            }
+        })
+    </script>
+    <script>
+        function api_copy() {
+            var textArea = document.createElement("textarea")
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.innerHTML = '{{ doc["api"] }}';
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            textArea.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            alert('Copied!')
+        }
+
+        function response_copy() {
+            var textArea = document.createElement("textarea")
+            textArea.style.position = "fixed";
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.innerHTML = '{{ doc["response"] }}';
+
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            textArea.setSelectionRange(0, 99999);
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+            alert('Copied!')
+        }
+    </script>
+    <title>Seokmin's API</title>
+</head>
+<body>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/home">
+                <h3>Portfolio</h3>
+            </a>
+            <i class="fa-solid fa-x"  style="color: #ffffff; cursor: pointer;" id="sidebar_close_btn"></i>
+        </div>
+        <div class="sidebar-content">
+            <div class="profile">
+                <img src="../static/image/memoji.jpg" alt="profile" id="profile_img">
+                <h3>이석민 (Lee SeokMin)</h3>
+            </div>
+            <div class="sidebar-item-list">
+                <ul>
+                    <li class="sidebar-item-header">
+                        <p>Main</p>
+                    </li>
+                    <li class="sidebar-item dashboard">
+                        <a id="dashboards-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-house"></i>
+                                <span>Dashboards</span>
+                            </div>
+                            <div id="dashboard_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="dashboards-menu">
+                            <li class="slidemenu">
+                                <a href="/profile" id="profile">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="slidemenu">
+                                <a href="/main" id="api">
+                                    <span>APIs</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item document">
+                        <a id="document-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-file"></i>
+                                <span>Document</span>
+                            </div>
+                            <div id="document_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="document-menu">
+                            <li class="slidemenu">
+                                <a href="/api/document?query=nature_language" id="NL">
+                                    <span>자연어 처리 (Nature Language)</span>
+                                </a>
+                                <a href="/api/document?query=stock_predict" id="stock">
+                                    <span>주식 예측 (Stock Predict)</span>
+                                </a>
+                                <a href="/api/document?query=face_recognition" id="face">
+                                    <span>얼굴 인식 (Face Recognition)</span>
+                                </a>
+                                <a href="/api/document?query=ocr" id="ocr">
+                                    <span>이미지 텍스트 추출 (OCR)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <nav class="main_nav">
+            <div id="front">
+                <span id="icon">
+                    <i class="fa-solid fa-bars fa-lg" style="color: #ffffff; cursor: pointer;" id="sidebar_open_btn"></i>
+                </span>
+                <input type="text" name="search" id="search" placeholder="Search projects.." autocomplete="off">
+            </div>
+            <div id="rear">
+                <span id="icon">
+                    <i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i>
+                </span>
+            </div>
+        </nav>
+        <main class="container">
+            <div class="container-fluid">
+                <div class="header">
+                    <a>
+                        <h1 class="header-title">API Document</h1>
+                    </a>
+                    <p class="header-subtitle">API 개발문서</p>
+                </div>
+                <div class="service">
+                    <div class="row">
+                        <div class="card document" style="width: 100%; height: 550px;">
+                            <div class="card-header">
+                                <h5 class="card-title" style="font-size: 15px;"></h5>
+                                <div class="etc">
+                                    <span></span>
+                                    <p>{{ lang }}</p>
+                                    <a target="_blank">
+                                        <i class="fa-brands fa-github-square fa-xl"></i>
+                                    </a>
+                                    <i class="fa-solid fa-ellipsis-vertical"></i>
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <div class="description">
+                                    <h4>이 문서는 REST API를 이용한 {{ name }} API의 구현 방법을 안내합니다.</h4>
+                                    <p>사용된 라이브러리: {% for i in doc['framework'] %} {{ i }} {% endfor %}</p>
+                                </div>
+                                <div class="code">
+                                    <p class="sub-title">API call</p>
+                                    <div class="api">
+                                        <code class="prettyprint">
+                                            {{ doc['api'] }}
+                                        </code>
+                                        <i class="fa-solid fa-copy" onclick="api_copy()"></i>
+                                    </div>
+                                    <p class="sub-title">Parameters</p>
+                                    <table id="parameter">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Name
+                                                </th>
+                                                <th>
+                                                    Type
+                                                </th>
+                                                <th>
+                                                    Method
+                                                </th>
+                                                <th>
+                                                    Required
+                                                </th>
+                                                <th>
+                                                    Description
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    {{ doc['parameter'][0] }}
+                                                </td>
+                                                <td>
+                                                    {{ doc['type'][0] }}
+                                                </td>
+                                                <td>
+                                                    {{ doc['method'][0] }}
+                                                </td>
+                                                <td>
+                                                    {{ doc['Required'][0] }}
+                                                </td>
+                                                <td>
+                                                    {{ doc['description'][0] }}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="responses">
+                                    <p class="sub-title">Respones</p>
+                                    <div id="api">
+                                        <code class="prettyprint">
+                                            {
+                                                {{ doc['response'][0] }}
+                                            }
+                                        </code>
+                                        <i class="fa-solid fa-copy" onclick="response_copy()"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <li>
+                            <a href="#">Home</a>
+                            <a href="#">Services</a>
+                            <a href="#">About</a>
+                            <a href="#">Terms</a>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <p class="copyright">© 2022 - 이석민</p>
+                    </footer>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

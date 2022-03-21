@@ -1,0 +1,648 @@
+html, body {
+    height: 100%;
+    background-color: #f4f7fb;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+}
+
+h4, p, h5, h2, h3 {
+    margin: 0;
+}
+
+a {
+    color: black;
+    text-decoration: none;
+}
+
+li {
+    list-style: none;
+}
+
+nav.sidebar {
+    width: 300px;
+    position: absolute;
+    background-color: #ffffff;
+    height: 100%;
+    z-index: 100;
+    transition: 0.5s;
+    margin-left: -300px;
+    box-shadow: 0 2px 4px rgb(126 142 177 / 12%);
+}
+
+nav.sidebar.active {
+    margin-left: 0;
+}
+
+nav.sidebar div.sidebar-header {
+    padding: 20px;
+    background-color: #153d77;
+    display: flex;
+    justify-content: space-between;
+}
+
+nav.sidebar div.sidebar-header h3 {
+    color: #ffffff;
+}
+
+nav.sidebar div.sidebar-content div.profile {
+    text-align: center;
+}
+
+nav.sidebar div.sidebar-content div.profile img#profile_img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+}
+
+div.sidebar-item-list ul {
+    padding: 0;
+}
+
+div.sidebar-item-list ul li.sidebar-item-header p {
+    color: #adb5bd;
+    font-size: 13px;
+    padding: 10px 10px 10px 15px;
+}
+
+div.sidebar-item-list ul li.sidebar-item {
+    text-align: center;
+}
+
+div.sidebar-item-list ul li.sidebar-item a.btn {
+    width: 90%;
+    margin: auto;
+    border-radius: 7px;
+    padding: 10px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.sidebar-item-list ul li.sidebar-item a.btn.active {
+    background-color: #e9ecef;
+}
+
+div.sidebar-item-list ul li.sidebar-item a i {
+    padding: 5px;
+    width: 18px;
+    height: 18px;
+}
+
+div.sidebar-item-list ul li.sidebar-item a span {
+    padding: 5px;
+}
+
+div.sidebar-item-list ul li.sidebar-item a div.angle {
+    padding: 5px;
+    transform: rotate(90deg);
+    transition: 0.5s;
+}
+
+div.sidebar-item-list ul li.slidemenu a {
+    padding: 10px 10px;
+    font-size: 14px;
+    display: inline-flex;
+    width: 90%;
+    margin: auto;
+}
+
+div.sidebar-item-list ul li.slidemenu a span {
+    padding-left: 40px;
+    color: #6c757d;
+}
+
+div.sidebar-item-list ul li.slidemenu a.active span {
+    color: #000000;
+}
+
+div.sidebar-item-list ul li.slidemenu a:hover > span {
+    color: #000000;
+}
+
+nav.sidebar div.sidebar-content div.profile img.card_img {
+    width: 280px;
+}
+
+nav.sidebar div.sidebar-content div.profile img.card_img {
+    width: 280px;
+}
+
+div.main {
+    height: 264px;
+    width: 100%;
+    background-color: #153d77;
+    display: flex;
+    flex-direction: column;
+    transition: 0.5s;
+}
+
+div.main nav.main_nav {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+
+div.main div#front input#search {
+    background: transparent;
+    border: 0;
+    color: #fff;
+    box-shadow: none;
+}
+
+div.main div#front input#search:focus {
+    outline: none;
+}
+
+div.main nav div span#icon {
+    padding: 20px;
+}
+
+div.main main.container {
+    margin: 0;
+    margin-top: 50px;
+    width: 100%;
+}
+
+div.main main.container div.container-fluid {
+    width: 90%;
+    margin: auto;
+}
+
+div.main main.container div.header {
+    margin-bottom: 60px;
+}
+
+div.main main.container div.header h1.header-title {
+    color: #ffffff;
+    font-size: 25px;
+}
+
+div.main main.container div.header p.header-subtitle {
+    color: #ffffff;
+}
+
+div.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 40px;
+}
+
+div.card {
+    background-color: #ffffff;
+    height: 450px;
+    box-shadow: 0 2px 4px rgb(126 142 177 / 12%);
+}
+
+div.card.document div.card-content {
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    div.card.document div.card-content {
+        flex-direction: column;
+    }
+}
+
+div.card.document div.card-content div.description p {
+    font-weight: bold;
+}
+
+div.card.document div.card-content div.code div.api {
+    padding: 20px 15px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.card.document div.card-content div.code div.api code {
+    padding: 5px;
+}
+
+div.card.document div.card-content div.code div.api i {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+div.card.document div.card-content div.code div.api i:hover {
+    background-color: #b6b6b7;
+}
+
+div.card.document div.card-content div.code table#parameter {
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    width: 100%;
+}
+
+div.card.document div.card-content div.code table#parameter thead {
+    background-color: #f5f6f9;
+    width: 100%;
+}
+
+div.card.document div.card-content div.code table#parameter thead tr th {
+    padding: 10px;
+}
+
+div.card.document div.card-content div.code table#parameter tbody tr td {
+    padding: 20px;
+}
+
+div.card.document div.card-content div.responses div {
+    padding: 20px 15px;
+    background-color: #f2f2f2;
+    display: flex;
+    justify-content: space-between;
+}
+
+div.card.document div.card-content div.responses div code {
+    padding: 5px;
+}
+
+div.card.document div.card-content div.responses div i {
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+div.card.document div.card-content div.responses div i:hover {
+    background-color: #b6b6b7;
+}
+
+div.card.document div.card-content div p.sub-title {
+    border-bottom: 1px solid #000000;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+div.minicard div.card.stock {
+    width: 45%;
+    height: 200px;
+}
+
+div.card div.card-header {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+}
+
+div.card div.card-header div.etc {
+    display: flex;
+}
+
+div.card div.card-header div.etc span.python {
+    background-color: #3672a4;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+div.card div.card-header div.etc span.nodejs {
+    background-color: #3b823c;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+div.card div.card-header div.etc span.js {
+    background-color: #efd819;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+div.card div.card-header div.etc p {
+    margin-right: 20px;
+}
+
+div.card div.card-header div.etc a {
+    margin-right: 20px;
+}
+
+div.card.stock div.card-content div.now-price {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+div.card.stock div.card-content div.now-price h2 {
+    vertical-align: middle;
+}
+
+div.card.stock div.card-content div.now-price div.stock_icon {
+    background-color: #2469ce;
+    padding: 10px;
+    border-radius: 50%;
+}
+
+div.card.stock div.card-content div.now-price div.stock_icon i {
+    color: #ffffff;
+}
+
+div.card.stock div.card-content div.price_change {
+    display: flex;
+    flex-direction: row;
+    margin-top: 20px;
+}
+
+div.card.stock div.card-content div.price_change h4.stock_percent {
+    margin-right: 8px;
+}
+
+div.card.stock div.card-content {
+    padding: 20px 30px 30px 30px;
+}
+
+div.card.profile {
+    height: 600px;
+}
+
+div.card.profile div.card-content h1 {
+    text-align: center;
+    animation: scaling 2s infinite;
+    background: linear-gradient(to right, #ff6e7f, #bfe9ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 40px;
+}
+
+@keyframes scaling {
+    0% {
+        -webkit-transform: scale(0.9);
+    }
+    50% {
+        -webkit-transform: scale(1.2);
+    }
+    100% {
+        -webkit-transform: scale(0.9);
+    }
+}
+
+div.card.profile div.card-content div.profile_section {
+    display: flex;
+    justify-content: space-evenly;
+    padding: 100px 0;
+}
+
+div.card.profile div.card-content div.picture img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+}
+
+div.card.profile div.card-content div.profile li#social {
+    margin-top: 20px;
+    text-align: center;
+}
+
+div.card.profile div.card-content div.profile li#social:hover {
+    transition: all 0.2s linear;
+    transform: scale(1.2);
+}
+
+div.card.profile div.card-content div.profile p {
+    margin-top: 20px;
+}
+
+div.card.profile div.card-content div.profile p span {
+    margin-right: 10px;
+}
+
+div.card.profile div.card-content div.profile a i {
+    margin-right: 10px;
+}
+
+div.card.profile div.card-content div.skill li {
+    display: flex;
+    margin-top: 20px;
+}
+
+div.card.profile div.card-content div.skill li p {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+div.card.profile div.card-content div.skill li p i {
+    margin-right: 10px;
+}
+
+div.main main.container div.container-fluid div.row div.card.nature-language div.card-content form {
+    padding: 20px;
+}
+
+div.main main.container div.container-fluid div.row div.card.nature-language div.card-content form input[type="text"] {
+    width: 40%;
+    height:30px;
+    border: 0;
+    box-shadow: 0 6px 10px 0 rgb(0 0 0 / 10%);
+    padding: 20px 18px;
+    font-size: 15px;
+}
+
+div.main main.container div.container-fluid div.row div.card.nature-language div.card-content form input[type="text"]:focus {
+    outline: none;
+}
+
+div.main main.container div.container-fluid div.row div.card.nature-language div.card-content form input[type="submit"] {
+    background-color: #7f8ff4;
+    color: #ffffff;
+    border: 0;
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
+    border-radius: 2px;
+    padding: 12px 36px;
+    margin-left: -96px;
+    transition: all 200ms ease-in;
+    cursor: pointer;
+}
+
+div.main main.container div.container-fluid div.row div.card.nature-language div.card-content form input[type="submit"]:hover {
+    opacity: 0.6;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form {
+    padding: 40px;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form label#file_btn {
+    background-color: #85C88A;
+    color: #ffffff;
+    padding: 8px 15px;
+    transition: all 200ms ease-in;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form label#file_btn:hover {
+    background-color: #679A6B;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form input#lang {
+    height: 30px;
+    font-size: 15px;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form input#lang:focus {
+    outline: none;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form input[type="submit"] {
+    background-color: #6FB2D2;
+    border: 0;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 200ms ease-in;
+}
+
+div.main main.container div.container-fluid div.row div.card.ocr div.card-content form input[type="submit"]:hover {
+    background-color: #5A91AB;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar button.fc-button {
+    background-color: #ffffff;
+    color: #3f4676;
+    border: 0;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar button.fc-button:hover {
+    background-color: #E6E9EC;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar table {
+    border: 0;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar h2.fc-toolbar-title {
+    font-size: 15px;
+    color: #3f4676;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar td {
+    border: 0;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar td.fc-day-today {
+    background-color: #3b7cdd;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar td.fc-day-today a {
+    color: #ffffff;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar th {
+    border: 0;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar a {
+    color: #3f4676;
+    text-align: center;
+}
+
+div.main main.container div.container-fluid div.row div.card.calendar div.card-content div#calendar div.fc-daygrid-day-top {
+    flex-direction: column;
+}
+
+div.main main.container div.container-fluid div.row div.card.stock-predict div.card-content form input[type="text"] {
+    width: 40%;
+    height: 30px;
+    border: 0;
+    box-shadow: 0 6px 10px 0 rgb(0 0 0 / 10%);
+    padding: 20px 18px;
+    font-size: 15px;
+    margin: auto;
+}
+
+div.main main.container div.container-fluid div.row div.card.stock-predict div.card-content form {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.main main.container div.container-fluid div.row div.card.stock-predict div.card-content form input[type="text"]:focus {
+    outline: none;
+}
+
+div.main main.container div.container-fluid div.row div.card.stock-predict div.card-content form input[type="submit"] {
+    padding: 15px 85px;
+    margin: 10px auto auto auto;
+    background-color: #a3c9fe;
+    color: #ffffff;
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 0 0 10px 2px rgb(0 0 0 / 10%);
+    transition: all 200ms ease-in;
+}
+
+div.main main.container div.container-fluid div.row div.card.stock-predict div.card-content form input[type="submit"]:hover {
+    background-color: #87A6D2;
+}
+
+div.main main.container div.container-fluid div.row div.card.face-recognition div.card-content form {
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+div.main main.container div.container-fluid div.row div.card.face-recognition div.card-content form label {
+    background-color: #DAB88B;
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 20%;
+    margin: auto;
+    transition: all 200ms ease-in;
+}
+
+div.main main.container div.container-fluid div.row div.card.face-recognition div.card-content form label:hover {
+    opacity: 0.6;
+}
+
+div.main main.container div.container-fluid div.row div.card.face-recognition div.card-content form input[type="submit"] {
+    width: 20%;
+    margin: 30px auto auto auto;
+    padding: 12px 20px;
+    border-radius: 10px;
+    border: 0;
+    background-color: #8878c3;
+    color: #ffffff;
+    transition: all 200ms ease-in;
+    cursor: pointer;
+}
+
+div.main main.container div.container-fluid div.row div.card.face-recognition div.card-content form input[type="submit"]:hover {
+    opacity: 0.6;
+}
+
+div.main main.container div.container-fluid div.service footer {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+}
+
+div.main main.container div.container-fluid div.service footer p {
+    color: #6c757d;
+}
+
+div.main main.container div.container-fluid div.service footer li a {
+    color: #6c757d;
+    padding-right: 10px;
+}

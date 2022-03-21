@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/locales-all.min.js'></script>
+
+    <script src="../static/js/sidebar.js?aa"></script>
+    <script>
+        $(document).ready(function() {
+            var css = '<link rel="stylesheet" href="../static/css/index.css?' + Math.random() + '">';
+            $('head').append(css);
+        })
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#dashboards-btn').addClass('active');
+            $('#dashboards-menu > li > #profile').addClass('active');
+        })
+    </script>
+    <title>Seokmin's api</title>
+</head>
+<body>
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="/home">
+                <h3>Portfolio</h3>
+            </a>
+            <i class="fa-solid fa-x"  style="color: #ffffff; cursor: pointer;" id="sidebar_close_btn"></i>
+        </div>
+        <div class="sidebar-content">
+            <div class="profile">
+                <img src="../static/image/memoji.jpg" alt="profile" id="profile_img">
+                <h3>이석민 (Lee SeokMin)</h3>
+            </div>
+            <div class="sidebar-item-list">
+                <ul>
+                    <li class="sidebar-item-header">
+                        <p>Main</p>
+                    </li>
+                    <li class="sidebar-item dashboard">
+                        <a id="dashboards-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-house"></i>
+                                <span>Dashboards</span>
+                            </div>
+                            <div id="dashboard_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="dashboards-menu">
+                            <li class="slidemenu">
+                                <a href="/profile" id="profile">
+                                    <span>Profile</span>
+                                </a>
+                            </li>
+                            <li class="slidemenu">
+                                <a href="/main" id="api">
+                                    <span>APIs</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="sidebar-item document">
+                        <a id="document-btn" class="btn">
+                            <div>
+                                <i class="fa-solid fa-file"></i>
+                                <span>Document</span>
+                            </div>
+                            <div id="document_angle" class="angle">
+                                <span>></span>
+                            </div>
+                        </a>
+                        <ul id="document-menu">
+                            <li class="slidemenu">
+                                <a href="/api/document?query=nature_language">
+                                    <span>자연어 처리 (Nature Language)</span>
+                                </a>
+                                <a href="/api/document?query=stock_predict">
+                                    <span>주식 예측 (Stock Predict)</span>
+                                </a>
+                                <a href="/api/document?query=face_recognition">
+                                    <span>얼굴 인식 (Face Recognition)</span>
+                                </a>
+                                <a href="/api/document?query=ocr">
+                                    <span>이미지 텍스트 추출 (OCR)</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main">
+        <nav class="main_nav">
+            <div id="front">
+                <span id="icon">
+                    <i class="fa-solid fa-bars fa-lg" style="color: #ffffff; cursor: pointer;" id="sidebar_open_btn"></i>
+                </span>
+                <input type="text" name="search" id="search" placeholder="Search projects.." autocomplete="off">
+            </div>
+            <div id="rear">
+                <span id="icon">
+                    <i class="fa-solid fa-gear fa-lg" style="color: #ffffff;"></i>
+                </span>
+            </div>
+        </nav>
+        <main class="container">
+            <div class="container-fluid">
+                <div class="header">
+                    <a href="profile">
+                        <h1 class="header-title">Seokmin's Profile</h1>
+                    </a>
+                    <p class="header-subtitle">안녕하세요! 개발자 이석민입니다.</p>
+                </div>
+                <div class="service">
+                    <div class="row">
+                        <div class="card profile" style="width: 100%;">
+                            <div class="card-content">
+                                <h1>About me</h1>
+                                <div class="profile_section">
+                                    <div class="picture">
+                                        <img src="../static/image/profile_img.png" alt="profile">
+                                    </div>
+                                    <div class="profile">
+                                        <h2>Profile</h2>
+                                        <li>
+                                            <p><span>Name:</span>이석민</p>
+                                        </li>
+                                        <li>
+                                            <p><span>Birth:</span>2004.05.05</p>
+                                        </li>
+                                        <li>
+                                            <p><span>School:</span>울산고등학교</p>
+                                        </li>
+                                        <li>
+                                            <p><span>E-mail:</span>dltjrals13@naver.com</p>
+                                        </li>
+                                        <li id="social">
+                                            <a href="https://github.com/seokmin12">
+                                                <i class="fa-brands fa-github fa-lg"></i>seokmin12
+                                            </a>
+                                        </li>
+                                        <li id="social">
+                                            <a href="https://www.instagram.com/min_e_coder/">
+                                                <i class="fa-brands fa-instagram fa-lg" style="color: #d53d88;"></i>@min_e_coder
+                                            </a>
+                                        </li>
+                                    </div>
+                                    <div class="skill">
+                                        <h2>Skills</h2>
+                                        <li>
+                                            <p>
+                                                <i class="fa-brands fa-python fa-xl" style="color: #3873a5;"></i>
+                                                Python
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <i class="fa-brands fa-js fa-xl" style="color: #efd819;"></i>
+                                                JavaScript
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <i class="fa-brands fa-php fa-xl" style="color: #787bb3;"></i>
+                                                PHP
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <i class="fa-brands fa-react fa-xl" style="color: #00d5f7;"></i>
+                                                React
+                                            </p>
+                                        </li>
+                                        <li>
+                                            <p>
+                                                <i class="fa-brands fa-swift fa-xl" style="color: #ff4b2d;"></i>
+                                                Swift
+                                            </p>
+                                        </li>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <footer>
+                        <li>
+                            <a href="#">Home</a>
+                            <a href="#">Services</a>
+                            <a href="#">About</a>
+                            <a href="#">Terms</a>
+                            <a href="#">Privacy Policy</a>
+                        </li>
+                        <p class="copyright">© 2022 - 이석민</p>
+                    </footer>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
