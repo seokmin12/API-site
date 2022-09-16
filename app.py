@@ -88,7 +88,7 @@ def document():
 def main():
     import requests
     from bs4 import BeautifulSoup
-    def crawling():
+    await def crawling():
         symbol_list = ['005930', '000660', '035420', '035720']
         stock_list = []
         for i in symbol_list:
