@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from flask_restful import reqparse
 import numpy as np
 from werkzeug.utils import secure_filename
 import pickle
@@ -88,7 +87,8 @@ def document():
 def main():
     import requests
     from bs4 import BeautifulSoup
-    await def crawling():
+    
+    def crawling():
         symbol_list = ['005930', '000660', '035420', '035720']
         stock_list = []
         for i in symbol_list:
